@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class FilmController {
 
     @Autowired
-    AppRepository repo;
+    AppRespitory repo;
 
     @PostMapping("/motor")
     public void lagre(Motorvogn motorvogn) {
