@@ -1,0 +1,24 @@
+package springboot1.webprog;
+
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+
+    @Repository
+    public class AppRespitory {
+        private final ArrayList<Motorvogn> motorvognliste = new ArrayList<>();
+
+        public void leggInn(Motorvogn motorvogn) {
+            motorvognliste.add(motorvogn);
+        }
+
+        public ArrayList<Motorvogn> hentAlle() {
+            return motorvognliste;
+        }
+
+        public void slettAlle() {
+            motorvognliste.clear();
+        }
+    }
+
+
