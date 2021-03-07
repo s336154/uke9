@@ -6,18 +6,18 @@ import java.util.ArrayList;
 
     @Repository
     public class AppRespitory {
-        private final ArrayList<Motorvogn> motorvognliste = new ArrayList<>();
+        private final ArrayList<film> filmliste = new ArrayList<>();
 
-        public void leggInn(Motorvogn motorvogn) {
-            motorvognliste.add(motorvogn);
+        public void leggInn(film film) {
+            filmliste.add(film);
         }
 
-        public ArrayList<Motorvogn> hentAlle() {
-            return motorvognliste;
+        public ArrayList<film> hentAlle() {
+            return filmliste;
         }
 
         public void slettAlle() {
-            motorvognliste.clear();
+            filmliste.clear();
         }
     }
 

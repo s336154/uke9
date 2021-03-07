@@ -16,17 +16,17 @@ public class FilmController {
     @Autowired
     AppRespitory repo;
 
-    @PostMapping("/motor")
-    public void lagre(Motorvogn motorvogn) {
-        repo.leggInn(motorvogn);
+    @PostMapping("/film")
+    public void lagre(film film) {
+        repo.leggInn(film);
     }
 
-    @GetMapping("/motor")
-    public ArrayList<Motorvogn> hent() {
+    @GetMapping("/film")
+    public ArrayList<film> hent() {
         return repo.hentAlle();
     }
 
-    @DeleteMapping("/motor")
+    @DeleteMapping("/film")
     public void slett() {
         repo.slettAlle();
     }

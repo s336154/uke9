@@ -1,45 +1,42 @@
-$(() => {
-    $("#regMotorvogn").click(() => {
-        const personnr = $("#personnr");
-        const navn = $("#navn");
-        const adresse = $("#adresse");
-        const kjennetegn = $("#kjennetegn");
-        const merke = $("#merke");
-        const type = $("#type");
 
-        const motorvogn = {
-            personnr: personnr.val(),
-            navn: navn.val(),
-            adresse: adresse.val(),
-            kjennetegn: kjennetegn.val(),
-            merke: merke.val(),
-            type: type.val()
+
+
+$(() => {
+    $("#regFilm").click(() => {
+
+        const velgfilm = $("#velgfilm");
+        const antall = $("#antall");
+        const fornavn = $("#fornavn");
+        const etternavn = $("#etternavn");
+        const telefonnr = $("#telefonnr");
+        const epost = $("#epost");
+
+        const film = {
+            velgfilm: velgfilm.val(),
+            antall: antall.val(),
+            fornavn: fornavn.val(),
+            etternavn: etternavn.val(),
+            telefonnr: telefonnr.val(),
+            epost: epost.val()
         };
 
-        if (inputval(motorvogn)) {
-            $.post("/motor", motorvogn, () => hent());
-            /*
+        if (inputval(film)) {
+            $.post("/film", film, () => hent());
 
-            //Alternativ skrivemåte ved bruk av vanlige functions
-            $.post("/motor", motorvogn, function (){
-                $.get("/motor", function (biler) {
-                    formater(biler);
-                });
-            });
-             */
-            personnr.val("");
-            navn.val("");
-            adresse.val("");
-            kjennetegn.val("");
-            merke.val("");
-            type.val("");
+
+            velgfilm.val("");
+            antall.val("");
+            fornavn.val("");
+            etternavn.val("");
+            telefonnr.val("");
+            epost.val("");
         } else {
             console.log("Mangler input");
         }
     });
 
     $("#slettAlle").click(() => {
-        $.ajax("/motor", {
+        $.ajax("/film", {
             type: 'DELETE',
             success: () => hent(),
             error: (jqXhr, textStatus, errorMessage) => console.log(errorMessage)
@@ -47,33 +44,34 @@ $(() => {
     });
 });
 
-const hent = () => $.get("/motor", biler => formater(biler));
+const hent = () => $.get("/film", filmer => formater(filmer));
 
-const inputval = motorvogn => {
-    if (motorvogn.personnr === "") return false
-    else if (motorvogn.navn === "") return false
-    else if (motorvogn.adresse === "") return false
-    else if (motorvogn.kjennetegn === "") return false
-    else if (motorvogn.merke === "") return false
-    else return motorvogn.type !== "";
+const inputval = film => {
+    if (film.velgfilm === "") return false
+    else if (film.antall === "") return false
+    else if (film.fornavn === "") return false
+    else if (film.etternavn === "") return false
+    else if (film.telefonnr === "") return false
+    else return film.epost !== "";
 }
 
-const formater = biler => {
-    let ut = "<table><tr><th>Personnr</th><th>Navn</th><th>Adresse</th>" +
-        "<th>Kjennetegn</th><th>Merke</th><th>Type</th></tr>";
+const formater = filmer => {
+    let ut = "<table><tr><th>Velgfilm</th><th>Antall</th><th>Fornavn</th>" +
+        "<th>Etternavn</th><th>Telefonnr</th><th>Epost</th></tr>";
 
-    for (let bil of biler) {
-        ut += "<tr><td>" + bil.personnr + "</td><td>" + bil.navn + "</td><td>" + bil.adresse + "</td>" +
-            "<td>" + bil.kjennetegn + "</td><td>" + bil.merke + "</td><td>" + bil.type + "</td></tr>";
+    for (let film of filmer) {
+        ut += "<tr><td>" + film.velgfilm + "</td><td>" + film.antall + "</td><td>" + film.fornavn + "</td>" +
+            "<td>" + film.etternavn + "</td><td>" + film.telefonnr + "</td><td>" + film.epost + "</td></tr>";
     }
 
     ut += "</table>";
 
-    $("#bilene").html(ut);
+    $("#filmene").html(ut);
 }
 
-function slettKundene() {
+function slettFilmene() {
     $.get( "/slettAlle", function() {
         hentAlle();
     });
+
 }
