@@ -1,7 +1,7 @@
 package springboot1.webprog;
 public class film {
     private String velgfilm;
-    private int antall;
+   /* private int antall;
     private String fornavn;
     private String etternavn;
     private int telefonnr;
@@ -14,8 +14,10 @@ public class film {
         this.etternavn = etternavn;
         this.telefonnr = telefonnr;
         this.epost = epost;
-    }
-
+    } */
+   public film(String velgfilm) {
+       this.velgfilm = velgfilm;
+   }
     public String getVelgfilm() {
         return velgfilm;
     }
@@ -23,7 +25,7 @@ public class film {
     public void setVelgfilm(String velgfilm) {
         this.velgfilm = velgfilm;
     }
-
+/*
     public int getAntall() {
         return antall;
     }
@@ -62,5 +64,5 @@ public class film {
 
     public void setEpost(String epost) {
         this.epost = epost;
-    }
+    } */
 }

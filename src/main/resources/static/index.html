@@ -1,27 +1,118 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Kino billeter</title>
-    <script src="oblig1.js"></script>
+
     <script src="//code.jquery.com/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+
+
+        let ErrorX = false
+
+        function info() {
+            const velgfilm = document.getElementById("velgfilm").value;
+            const antall = document.getElementById("antall").value;
+            const fornavn = document.getElementById("fornavn").value;
+            const etternavn = document.getElementById("etternavn").value;
+            const telefonnr = document.getElementById("telefonnr").value;
+            const epost = document.getElementById("epost").value;
+
+            let filmF = velgfilm;
+            let antallF = antall;
+            let fornavnF = fornavn;
+            let etternavnF = etternavn;
+            let telefonnrF = telefonnr;
+            let epostF = epost;
+
+            if (filmF === "velg film her") {
+                document.getElementById("filmX").innerHTML = "må velge film";
+                ErrorX = true;
+            } else if (antallF === "") {
+                document.getElementById("antallX").innerHTML = "må skrive noe inn i antall";
+                ErrorX = true;
+            } else if (isNaN(antallF)) {
+                document.getElementById("antallX").innerHTML = "må skrive noe inn riktig antall";
+                ErrorX = true;
+            } else if (fornavnF === "") {
+                document.getElementById("fornavnX").innerHTML = "må skrive noe inn i fornavnet";
+                ErrorX = true;
+            } else if (etternavnF === "") {
+                document.getElementById("etternavnX").innerHTML = "må skrive noe inn etternavnet";
+                ErrorX = true;
+            } else if (telefonnrF === "") {
+                document.getElementById("telefonnrX").innerHTML = "må skrive noe inn telefonnr";
+                ErrorX = true;
+            } else if (isNaN(telefonnrF)) {
+                document.getElementById("telefonnrX").innerHTML = "må skrive noe inn riktig telefonnr";
+                ErrorX = true;
+            } else if (epostF === "") {
+                document.getElementById("epostX").innerHTML = "må skrive noe inn i epost";
+                ErrorX = true;
+            }
+            if (ErrorX === true) {
+                return;
+            } else {
+                const kinoBilleter = [];
+                const billet = {
+                    velgfilm: velgfilm,
+                    antall: antall,
+                    fornavn: fornavn,
+                    etternavn: etternavn,
+                    telefonnr: telefonnr,
+                    epost: epost
+                };
+                kinoBilleter.push(billet);
+                let ut = "<table><tr>" +
+                    "<th><b>Film</b></th><th><b>Antall</b></th><th><b>Fornavn</b></th><th><b>Etternavn</b></th><th><b>Telefonnr</b></th><th><b>Epost</b></th>" +
+                    "</tr>";
+                for (let B of kinoBilleter) {
+                    ut += "<tr>";
+                    ut += "<td>" + B.velgfilm + "</td><td>" + B.antall + "</td><td>" + B.fornavn + "</td><td>" + B.etternavn + "</td><td>" + B.telefonnr + "</td><td>" + B.epost + "</td>";
+                    ut += "</tr>";
+                }
+                document.getElementById("bestillingen").innerHTML = ut;
+
+            }
+
+            $(function() {
+                $("#knapp1").click(function () {
+                    $("#bestillingen").remove();
+                });
+            });}
+
+        (function() { // kjøres når dokumentet er ferdig lastet
+            hentAlleFilmer();
+        });
+        function hentAlleFilmer() {
+            $.get("/hentFilmer"
+                , function(filmer) {
+                    formaterBiler(filmer);
+                });
+        }
+        function formaterFilmer(filmer) {
+            let ut = "<select id='valgtFilm'>";
+            for(const film of filmer) {
+                ut += "<option value=‘" + film.valgtfilm + "’>" + film.valgtfilm + "</option>";
+            }
+            ut += "</select>";
+            $("#filmene").html(ut);
+        }
+
+    </script>
+
+
 </head>
 <body>
+
 <h1><b>Bestlling av kinobilleter</b></h1>
 
 
-<label for="velgfilm"><b>Velg film: </b></label>
-<select id="velgfilm">
-    <option> velg film her</option>
-    <option>Superman</option>
-    <option>Spiderman</option>
-    <option>Titanic</option>
-    <option>A walk to remeber</option>
-    <option>Batman</option>
-    <option>Pokemon</option>
-    <option>Cindrella</option>
-</select> <span id="filmX" style="color:red"> </span>
+<div class="form-group">
+    <label>Velgfilm</label>
+    <div id="filmene"></div>
+</div>
+ <span id="filmX" style="color:red"> </span>
 
 </br></br>
 
@@ -55,48 +146,6 @@
 
 
 </body>
-</html>
 
-<!--
-
-<!DOCTYPE html>
-<html lang="no">
-<head>
-    <meta charset="UTF-8">
-    <title>Motorvognregister 1</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="index.js"></script>
-</head>
-<body>
-<h1>Motorvognregister</h1>
-<table>
-    <tr>
-        <td>Eiers personnummer</td>
-        <td>Eiers navn</td>
-        <td>Eiers adresse</td>
-    </tr>
-    <tr>
-        <td><label for="personnr"></label><input type="text" id="personnr"/></td>
-        <td><label for="navn"></label><input type="text" id="navn"/></td>
-        <td><label for="adresse"></label><input type="text" id="adresse"/></td>
-    </tr>
-    <tr>
-        <td>Kjennetegn</td>
-        <td>Bilmerke</td>
-        <td>Biltype</td>
-    </tr>
-    <tr>
-        <td><label for="kjennetegn"></label><input type="text" id="kjennetegn"/></td>
-        <td><label for="merke"></label><input type="text" id="merke"/></td>
-        <td><label for="type"></label><input type="text" id="type"/></td>
-    </tr>
-</table>
-<button id="regMotorvogn">Registrer</button>
-<br>
-Alle bilene:
-<div id="bilene"></div>
-<button id="slettAlle">Slett alle</button>
-<br>
 </body>
 </html>
- -->
